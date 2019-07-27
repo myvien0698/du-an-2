@@ -11,14 +11,11 @@ namespace bai3
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        private readonly object writer;
-        private readonly int entry;
-        private object StringSpilitOptions;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             // hiển thị các entry comment trước
             ReadComment();
+            
         }
 
        
@@ -37,30 +34,33 @@ namespace bai3
                 writer.WriteLine(txtemail.Text);
                 writer.WriteLine(txtnoidung.Text);
                 //thêm ký hiệu nhận dạng kết thúc 1 entry để lọc ra từng entry
+                writer.WriteLine(date);
                 writer.WriteLine("#END");
                 writer.Close();
             }
+            Response.Redirect("WebForm1.aspx");
         }
         private void ReadComment()
         {
 
-            //hàm đọc các comment trong file và đưa cào bảng trên wed
+            //hàm đọc các comment trong file và đưa vào bảng trên wed
             string sfile = Server.MapPath(@"\") + "data.txt";
             // mở file, nếu khác rỗng thì bắt đầu đọc
-            using (StreamWrite reader = new StreamWrite(sfile: sfile))
+            using (StreamReader reader = new StreamReader(sfile))
             {
                 // đọc toàn bộ file
-                string snoidung = reader.ReadToEnd();
+                string snoidung = reader.ReadToEnd(); 
                 string[] delimiter = { "#END" };
                 // lọc ra từng entry và đưa vào mảng chuổi
-                string[] sArr = snoidung.Split(delimiter, StringSpilitOptions.RemoveEmptyEntries);
+                string[] sArr = snoidung.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
                 // duyệt qua từng entry
                 foreach(string s in sArr)
                 {
                     string stemp;
                     // thay thế ký tự " xuống dòng và đầu dòng" bằng tab break
-                    stemp = Regex.Replace(s, @"\r\n", @"<\br>");
+                    stemp = Regex.Replace(s, @"\r\n", @"</br>");
                     // tạo ra các dòng hiển thị entry
+                    string entry = string.Format("<tr><td colspan=\"2\">{0}</td></tr>", stemp);
                     EntryComment.InnerHtml += entry;
                 }
             }
