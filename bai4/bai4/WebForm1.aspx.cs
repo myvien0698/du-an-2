@@ -24,18 +24,19 @@ namespace bai4
             {
                 if (CheckFileType(FileUpload1.FileName))
                 {
-                    FileUpload1.SaveAs(Server.MapPath("~") + FileUpload1.FileName);
+                   // FileUpload1.SaveAs(Server.MapPath("~") + FileUpload1.FileName);
                     lblMessage.Text = "Upload file thanh cong";
                 }
                 else
                     lblMessage.Text = "Upload file khong thanh cong";
             }
-          
+            Response.Redirect("WebForm2.aspx");
         }
 
         private bool CheckFileType(string fileName)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return true;
         }
     }
 }
