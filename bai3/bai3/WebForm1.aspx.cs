@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace bai3
 {
@@ -18,13 +13,9 @@ namespace bai3
             
         }
 
-       
-        protected void btnguiND_Click(object sender, EventArgs e)
+        protected void btnGuiND_Click(object sender, EventArgs e)
         {
-            // tao file theo duong dan wedsite
-            DateTime date = DateTime.Now;
-            string sfile = Server.MapPath(@"\")
-                + "data.txt";
+            string sfile = Server.MapPath(@"\") + "data.txt";
             //mở file nếu khác rỗng thì thêm
             using (StreamWriter writer = new StreamWriter(sfile, true))
             {
@@ -34,19 +25,27 @@ namespace bai3
                 writer.WriteLine(txtemail.Text);
                 writer.WriteLine(txtnoidung.Text);
                 //thêm ký hiệu nhận dạng kết thúc 1 entry để lọc ra từng entry
-                writer.WriteLine(date);
+
                 writer.WriteLine("#END");
                 writer.Close();
             }
-            Response.Redirect("WebForm1.aspx");
+
         }
-        private void ReadComment()
+
+        protected void btncmt_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+
+        private void ReadComment()
+        {
             //hàm đọc các comment trong file và đưa vào bảng trên wed
             string sfile = Server.MapPath(@"\") + "data.txt";
-            // mở file, nếu khác rỗng thì bắt đầu đọc
+            // mở file, nếu khác rỗng thì bắt đầu đọcad
             using (StreamReader reader = new StreamReader(sfile))
+                
             {
                 // đọc toàn bộ file
                 string snoidung = reader.ReadToEnd(); 
@@ -61,9 +60,11 @@ namespace bai3
                     stemp = Regex.Replace(s, @"\r\n", @"</br>");
                     // tạo ra các dòng hiển thị entry
                     string entry = string.Format("<tr><td colspan=\"2\">{0}</td></tr>", stemp);
-                    EntryComment.InnerHtml += entry;
+                    EntryComment.InnerHtml  += 1;
                 }
             }
         }
+
+      
     }
 }
